@@ -165,7 +165,7 @@
 
 				item.setAttribute("src", "img/items/" + vars[i] + ".png")
 				item.setAttribute("style", "position:absolute;left:" + (i * 32) + "px;top:" + "0px;background-color:blue;")
-				item.innerHTML = preGenPlayer.inventory[vars[i]]
+				item.innerHTML = "<"+preGenPlayer.inventory[vars[i]]+">"
 
 				invbox.appendChild(item)
 			}
