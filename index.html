@@ -164,7 +164,7 @@
 				let item = document.createElement("img")
 
 				item.setAttribute("src", "img/items/" + vars[i] + ".png")
-				item.setAttribute("style", "position:absolute;left:" + (i*32) + "px;top:"+"0px;background-color:blue;")
+				item.setAttribute("style", "position:absolute;left:" + (i * 32) + "px;top:" + "0px;background-color:blue;")
 				item.innerHTML = preGenPlayer.inventory[vars[i]]
 
 				invbox.appendChild(item)
@@ -176,16 +176,6 @@
 
 
 	function keyinputs() {
-		document.addEventListener('keydown', function (event) {
-			if (event.keyCode == 69) {
-				//INTERACT
-				playerIsInspecting = true
-				if (preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]]) {
-					interact()
-				}
-			}
-		});
-
 		document.addEventListener('keydown', function (event) {
 			if (event.keyCode == 65) {
 				//Left
@@ -232,6 +222,12 @@
 				//INVENTORY
 				console.log(preGenPlayer.inventory)
 				inventory()
+			} else if (event.keyCode == 69) {
+				//INTERACT
+				playerIsInspecting = true
+				if (preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]]) {
+					interact()
+				}
 			} else if (false) {
 				//MENU
 
@@ -244,11 +240,7 @@
 		document.addEventListener('keyup', function (event) {
 			if (event.keyCode == 69) {
 				playerIsInspecting = false
-			}
-		});
-
-		document.addEventListener('keyup', function (event) {
-			if (event.keyCode == 65 || event.keyCode == 68 || event.keyCode == 87 || event.keyCode == 83) {
+			} else if (event.keyCode == 65 || event.keyCode == 68 || event.keyCode == 87 || event.keyCode == 83) {
 				playerIsMovingInDirection = [0, 0]
 			}
 		});
@@ -276,8 +268,8 @@
 	preGenPlayer.inventory.bone = 0
 
 	/*
-		"veg3.png": "Pebbles",
-		"veg4.png": "Pebbles",*/
+		"vegx.png": "Pebbles",
+		"vegx.png": "Pebbles",*/
 
 	for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 		preGenMap.push([])
