@@ -55,9 +55,9 @@
 		gamePapa.appendChild(gameArea)
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
-				let tile = document.createElement("img")
-				tile.setAttribute("src", preGenMap[i][j].nameOfTile)
-				tile.setAttribute("style", "position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+
+				let tile = document.createElement("div")
+				tile.setAttribute("style", "background-image: url("+preGenMap[i][j].nameOfTile+");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 				gameArea.appendChild(tile)
 			}
 		}
@@ -72,9 +72,9 @@
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				if (preGenVegetation[i][j]) {
-					let tile = document.createElement("img")
-					tile.setAttribute("src", preGenVegetation[i][j].nameOfTile)
-					tile.setAttribute("style", "position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+
+					let tile = document.createElement("div")
+					tile.setAttribute("style", "background-image: url("+preGenVegetation[i][j].nameOfTile+");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 					gameArea.appendChild(tile)
 				}
 			}
@@ -86,10 +86,9 @@
 		let gameArea = document.getElementById(areaToRender)
 		if (document.getElementById("player"))
 			document.getElementById("player").parentNode.removeChild(document.getElementById("player"))
-		let tile = document.createElement("img")
+		let tile = document.createElement("div")
 		tile.setAttribute("id", "player")
-		tile.setAttribute("src", preGenPlayer.nameOfTile)
-		tile.setAttribute("style", "position:absolute;left:" + (preGenPlayer.coordinate[0] * TILESIZE) + "px;top:" + (preGenPlayer.coordinate[1] * TILESIZE) + "px;")
+		tile.setAttribute("style", "background-image: url("+preGenPlayer.nameOfTile+");height:32px;width:16px;position:absolute;left:" + (preGenPlayer.coordinate[0] * TILESIZE) + "px;top:" + (preGenPlayer.coordinate[1] * TILESIZE) + "px;")
 		gameArea.appendChild(tile)
 	}
 
@@ -161,11 +160,10 @@
 		for (let i = 0; i < vars.length; i++) {
 
 			if (preGenPlayer.inventory[vars[i]] > 0) {
-				let item = document.createElement("img")
+				let item = document.createElement("div")
 
-				item.setAttribute("src", "img/items/" + vars[i] + ".png")
-				item.setAttribute("style", "position:absolute;left:" + (i * 32) + "px;top:" + "0px;background-color:blue;")
-				item.innerHTML = "<"+preGenPlayer.inventory[vars[i]]+">"
+				item.setAttribute("style", "background-image: url(img/items/" + vars[i] + ".png);height:32px;width:32px;position:absolute;left:" + (i * 32) + "px;top:" + "0px;background-color:blue;")
+				item.innerHTML = preGenPlayer.inventory[vars[i]]
 
 				invbox.appendChild(item)
 			}
