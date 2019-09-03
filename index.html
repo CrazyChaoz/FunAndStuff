@@ -55,9 +55,8 @@
 		gamePapa.appendChild(gameArea)
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
-
 				let tile = document.createElement("div")
-				tile.setAttribute("style", "background-image: url("+preGenMap[i][j].nameOfTile+");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+				tile.setAttribute("style", "background-image: url(" + preGenMap[i][j].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 				gameArea.appendChild(tile)
 			}
 		}
@@ -72,9 +71,8 @@
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				if (preGenVegetation[i][j]) {
-
 					let tile = document.createElement("div")
-					tile.setAttribute("style", "background-image: url("+preGenVegetation[i][j].nameOfTile+");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i][j].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 					gameArea.appendChild(tile)
 				}
 			}
@@ -88,14 +86,13 @@
 			document.getElementById("player").parentNode.removeChild(document.getElementById("player"))
 		let tile = document.createElement("div")
 		tile.setAttribute("id", "player")
-		tile.setAttribute("style", "background-image: url("+preGenPlayer.nameOfTile+");height:32px;width:16px;position:absolute;left:" + (preGenPlayer.coordinate[0] * TILESIZE) + "px;top:" + (preGenPlayer.coordinate[1] * TILESIZE) + "px;")
+		tile.setAttribute("style", "background-image: url(" + preGenPlayer.nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (preGenPlayer.coordinate[0] * TILESIZE) + "px;top:" + (preGenPlayer.coordinate[1] * TILESIZE) + "px;")
 		gameArea.appendChild(tile)
 	}
 
 
 	function interact() {
 		console.log("Player is interacting with " + preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]].nameOfTile)
-
 		switch (vegetationKinds[preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]].nameOfTile.replace(vegetationTilesPath, "")]) {
 			case "Cactus":
 				console.log("Ouch, that hurt!")
@@ -107,12 +104,18 @@
 				preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]] = 0
 
 				let boneSplinterCount = (~~(Math.random() * 4))
-				preGenPlayer.inventory.boneSplinter += boneSplinterCount
-
+				if (boneSplinterCount > 0) {
+					if (isNaN(preGenPlayer.inventory.boneSplinter))
+						preGenPlayer.inventory.boneSplinter = 0
+					preGenPlayer.inventory.boneSplinter += boneSplinterCount
+				}
 
 				let boneCount = (~~(Math.random() * 2))
-				preGenPlayer.inventory.bone += boneCount
-
+				if (boneCount > 0) {
+					if (isNaN(preGenPlayer.inventory.bone))
+						preGenPlayer.inventory.bone = 0
+					preGenPlayer.inventory.bone += boneCount
+				}
 
 				renderVegetation()
 				break;
@@ -124,51 +127,36 @@
 	function dialogBox(text) {
 		let game = document.getElementById("gameAfter");
 		let dialogbox = document.createElement("div")
-
-
 		if (document.getElementById('dialogbox'))
 			document.getElementById('gameAfter').removeChild(document.getElementById('dialogbox'))
-
-
 		dialogbox.setAttribute("id", "dialogbox")
 		dialogbox.setAttribute("style", "position:absolute;left:30%;right:30%;bottom:10px;background-color:white;")
 		dialogbox.innerHTML = text
 		dialogbox.addEventListener('click', function (event) {
 			document.getElementById('gameAfter').removeChild(document.getElementById('dialogbox'))
 		})
-
 		game.appendChild(dialogbox)
 	}
 
 	function inventory() {
 		let game = document.getElementById("gameAfter");
 		let invbox = document.createElement("div")
-
-
 		if (document.getElementById('invbox'))
 			document.getElementById('gameAfter').removeChild(document.getElementById('invbox'))
-
-
 		invbox.setAttribute("id", "invbox")
 		invbox.setAttribute("style", "position:absolute;left:30%;right:30%;bottom:30%;top:30%;background-color:white;")
 		invbox.addEventListener('click', function (event) {
 			document.getElementById('gameAfter').removeChild(document.getElementById('invbox'))
 		})
-
-
 		let vars = Object.keys(preGenPlayer.inventory)
 		for (let i = 0; i < vars.length; i++) {
-
 			if (preGenPlayer.inventory[vars[i]] > 0) {
 				let item = document.createElement("div")
-
 				item.setAttribute("style", "background-image: url(img/items/" + vars[i] + ".png);height:32px;width:32px;position:absolute;left:" + (i * 32) + "px;top:" + "0px;background-color:blue;")
 				item.innerHTML = preGenPlayer.inventory[vars[i]]
-
 				invbox.appendChild(item)
 			}
 		}
-
 		game.appendChild(invbox)
 	}
 
@@ -178,7 +166,6 @@
 			if (event.keyCode == 65) {
 				//Left
 				playerIsMovingInDirection = [-1, 0]
-
 				if (!preGenVegetation[preGenPlayer.coordinate[0] - 1][preGenPlayer.coordinate[1]]) {
 					preGenPlayer.coordinate[0] -= 1
 				} else {
@@ -228,12 +215,9 @@
 				}
 			} else if (false) {
 				//MENU
-
 			}
-			//renderVegetation()
 			renderPlayer()
-		});
-
+		})
 
 		document.addEventListener('keyup', function (event) {
 			if (event.keyCode == 69) {
@@ -241,13 +225,14 @@
 			} else if (event.keyCode == 65 || event.keyCode == 68 || event.keyCode == 87 || event.keyCode == 83) {
 				playerIsMovingInDirection = [0, 0]
 			}
-		});
+		})
 	}
-
 
 	const TILESIZE = 16
 	const vegetationTilesPath = "img/vegetation/"
-	let preGenPlayer = new Player(1, 2, {})
+
+
+	let preGenPlayer = new Player(~~(window.innerWidth / TILESIZE/2),~~(window.innerHeight / TILESIZE/2), {})
 	let preGenMap = []
 	let preGenVegetation = []
 	let playerIsInspecting = false
@@ -261,13 +246,7 @@
 		"veg5.png": "Bones",
 	}
 
-
-	preGenPlayer.inventory.boneSplinter = 0
-	preGenPlayer.inventory.bone = 0
-
-	/*
-		"vegx.png": "Pebbles",
-		"vegx.png": "Pebbles",*/
+	console.log(preGenPlayer)
 
 	for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 		preGenMap.push([])
@@ -276,7 +255,6 @@
 		}
 	}
 
-
 	for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 		preGenVegetation.push([])
 		for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
@@ -284,13 +262,9 @@
 				preGenVegetation[i][j] = new Tile(vegetationTilesPath + "veg" + (~~(Math.random() * (Object.keys(vegetationKinds).length))) + ".png")
 		}
 	}
-
-
 	renderMap()
 	renderVegetation()
 	renderPlayer()
 	keyinputs()
-
-
 </script>
 </html>
