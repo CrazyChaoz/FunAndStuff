@@ -70,7 +70,7 @@
 		gamePapa.appendChild(gameArea)
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
-				if (preGenVegetation[i][j]) {
+				if (preGenVegetation[i+generalMapOffset[0]][j+generalMapOffset[1]]) {
 					let tile = document.createElement("div")
 					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i+generalMapOffset[0]][j+generalMapOffset[1]].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 					gameArea.appendChild(tile)
