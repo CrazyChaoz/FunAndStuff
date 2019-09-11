@@ -56,7 +56,7 @@
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				let tile = document.createElement("div")
-				tile.setAttribute("style", "background-image: url(" + preGenMap[i + generalMapOffset[0]][j + generalMapOffset[1]].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+				tile.setAttribute("style", "background-image: url(" + preGenMap[i + generalMapOffset[0]][j + generalMapOffset[1]].nameOfTile + ");height:32px;width:32px;position:absolute;left:" + (i * TILESIZE*2) + "px;top:" + (j * TILESIZE*2) + "px;")
 				gameArea.appendChild(tile)
 			}
 		}
