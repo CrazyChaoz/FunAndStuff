@@ -1,1 +1,1 @@
-# a simple client side webapp
+# a simple client side webgame
