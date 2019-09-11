@@ -56,7 +56,7 @@
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				let tile = document.createElement("div")
-				tile.setAttribute("style", "background-image: url(" + preGenMap[i+generalMapOffset[0]][j+generalMapOffset[1]].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+				tile.setAttribute("style", "background-image: url(" + preGenMap[i + generalMapOffset[0]][j + generalMapOffset[1]].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 				gameArea.appendChild(tile)
 			}
 		}
@@ -70,9 +70,9 @@
 		gamePapa.appendChild(gameArea)
 		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
 			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
-				if (preGenVegetation[i+generalMapOffset[0]][j+generalMapOffset[1]]) {
+				if (preGenVegetation[i + generalMapOffset[0]][j + generalMapOffset[1]]) {
 					let tile = document.createElement("div")
-					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i+generalMapOffset[0]][j+generalMapOffset[1]].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i + generalMapOffset[0]][j + generalMapOffset[1]].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 					gameArea.appendChild(tile)
 				}
 			}
@@ -80,7 +80,7 @@
 	}
 
 	function renderPlayer() {
-		let areaToRender = (preGenVegetation[preGenPlayer.coordinate[0]][preGenPlayer.coordinate[1] + 1]) ? "gameArea" : "gameVegetation"
+		let areaToRender = (preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] + 1]) ? "gameArea" : "gameVegetation"
 		let gameArea = document.getElementById(areaToRender)
 		if (document.getElementById("player"))
 			document.getElementById("player").parentNode.removeChild(document.getElementById("player"))
@@ -92,8 +92,8 @@
 
 
 	function interact() {
-		console.log("Player is interacting with " + preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]].nameOfTile)
-		switch (vegetationKinds[preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]].nameOfTile.replace(vegetationTilesPath, "")]) {
+		console.log("Player is interacting with " + preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] + playerIsMovingInDirection[1]].nameOfTile)
+		switch (vegetationKinds[preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] + playerIsMovingInDirection[1]].nameOfTile.replace(vegetationTilesPath, "")]) {
 			case "Cactus":
 				console.log("Ouch, that hurt!")
 				dialogBox("Ouch, that hurt!")
@@ -101,7 +101,7 @@
 			case "Bones":
 				console.log("Those Bones could proove useful")
 				dialogBox("Those Bones could proove useful")
-				preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]] = 0
+				preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] + playerIsMovingInDirection[1]] = 0
 
 				let boneSplinterCount = (~~(Math.random() * 4))
 				if (boneSplinterCount > 0) {
@@ -163,14 +163,17 @@
 
 	function keyinputs() {
 		document.addEventListener('keydown', function (event) {
+			let innerWidthStuff = ~~((window.innerWidth / TILESIZE) / 4)
+			let innerHeightStuff = ~~((window.innerHeight / TILESIZE) / 4)
+
 			if (event.keyCode == 65) {
 				//Left
 				playerIsMovingInDirection = [-1, 0]
-				if (!preGenVegetation[preGenPlayer.coordinate[0] - 1][preGenPlayer.coordinate[1]]) {
+				if (!preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0] - 1][preGenPlayer.coordinate[1] + generalMapOffset[1]]) {
 					preGenPlayer.coordinate[0] -= 1
-					if (preGenPlayer.coordinate[0] < (~~(window.innerWidth / TILESIZE / 4))) {
-						generalMapOffset[0] -= (~~(window.innerWidth / TILESIZE / 4))
-						preGenPlayer.coordinate[0] += (~~(window.innerWidth / TILESIZE / 4))
+					if (preGenPlayer.coordinate[0] < innerWidthStuff) {
+						generalMapOffset[0] -= innerWidthStuff
+						preGenPlayer.coordinate[0] += innerWidthStuff
 						renderMap()
 						renderVegetation()
 					}
@@ -182,11 +185,11 @@
 			} else if (event.keyCode == 68) {
 				//Right
 				playerIsMovingInDirection = [1, 0]
-				if (!preGenVegetation[preGenPlayer.coordinate[0] + 1][preGenPlayer.coordinate[1]]) {
+				if (!preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0] + 1][preGenPlayer.coordinate[1] + generalMapOffset[1]]) {
 					preGenPlayer.coordinate[0] += 1
-					if (preGenPlayer.coordinate[0] > (~~(3 * window.innerWidth / TILESIZE / 4))) {
-						generalMapOffset[0] += (~~(window.innerWidth / TILESIZE / 4))
-						preGenPlayer.coordinate[0] -= (~~(window.innerWidth / TILESIZE / 4))
+					if (preGenPlayer.coordinate[0] > 3 * innerWidthStuff) {
+						generalMapOffset[0] += innerWidthStuff
+						preGenPlayer.coordinate[0] -= innerWidthStuff
 						renderMap()
 						renderVegetation()
 					}
@@ -198,11 +201,11 @@
 			} else if (event.keyCode == 87) {
 				//UP
 				playerIsMovingInDirection = [0, -1]
-				if (!preGenVegetation[preGenPlayer.coordinate[0]][preGenPlayer.coordinate[1] - 1]) {
+				if (!preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] - 1]) {
 					preGenPlayer.coordinate[1] -= 1
-					if (preGenPlayer.coordinate[1] < (~~(window.innerHeight / TILESIZE / 4))) {
-						generalMapOffset[1] -= (~~(window.innerHeight / TILESIZE / 4))
-						preGenPlayer.coordinate[1] += (~~(window.innerHeight / TILESIZE / 4))
+					if (preGenPlayer.coordinate[1] < innerHeightStuff) {
+						generalMapOffset[1] -= innerHeightStuff
+						preGenPlayer.coordinate[1] += innerHeightStuff
 						renderMap()
 						renderVegetation()
 					}
@@ -214,11 +217,11 @@
 			} else if (event.keyCode == 83) {
 				//DOWN
 				playerIsMovingInDirection = [0, 1]
-				if (!preGenVegetation[preGenPlayer.coordinate[0]][preGenPlayer.coordinate[1] + 1]) {
+				if (!preGenVegetation[preGenPlayer.coordinate[0] + generalMapOffset[0]][preGenPlayer.coordinate[1] + generalMapOffset[1] + 1]) {
 					preGenPlayer.coordinate[1] += 1
-					if (preGenPlayer.coordinate[1] > (~~(3 * window.innerHeight / TILESIZE / 4))) {
-						generalMapOffset[1] += (~~(window.innerHeight / TILESIZE / 4))
-						preGenPlayer.coordinate[1] -= (~~(window.innerHeight / TILESIZE / 4))
+					if (preGenPlayer.coordinate[1] > 3 * innerHeightStuff) {
+						generalMapOffset[1] += innerHeightStuff
+						preGenPlayer.coordinate[1] -= innerHeightStuff
 						renderMap()
 						renderVegetation()
 					}
@@ -234,7 +237,11 @@
 			} else if (event.keyCode == 69) {
 				//INTERACT
 				playerIsInspecting = true
-				if (preGenVegetation[preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]][preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]]) {
+
+				console.log("Player: " + preGenPlayer.coordinate[0] + ";" + preGenPlayer.coordinate[1])
+				console.log("Plant: " + (preGenPlayer.coordinate[0] + playerIsMovingInDirection[0]) + ";" + (preGenPlayer.coordinate[1] + playerIsMovingInDirection[1]))
+
+				if (preGenVegetation[(preGenPlayer.coordinate[0] + generalMapOffset[0] + playerIsMovingInDirection[0])][(preGenPlayer.coordinate[1] + generalMapOffset[1] + playerIsMovingInDirection[1])]) {
 					interact()
 				}
 			} else if (false) {
