@@ -53,10 +53,10 @@
 		let gameArea = document.createElement("div")
 		gameArea.setAttribute("id", "gameArea")
 		gamePapa.appendChild(gameArea)
-		for (let i = generalMapOffset[0]; i < (window.innerWidth / TILESIZE) + generalMapOffset[0]; i++) {
-			for (let j = generalMapOffset[1]; j < (window.innerHeight / TILESIZE) + generalMapOffset[1]; j++) {
+		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
+			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				let tile = document.createElement("div")
-				tile.setAttribute("style", "background-image: url(" + preGenMap[i][j].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+				tile.setAttribute("style", "background-image: url(" + preGenMap[i+generalMapOffset[0]][j+generalMapOffset[1]].nameOfTile + ");height:16px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 				gameArea.appendChild(tile)
 			}
 		}
@@ -68,11 +68,11 @@
 		let gameArea = document.createElement("div")
 		gameArea.setAttribute("id", "gameVegetation")
 		gamePapa.appendChild(gameArea)
-		for (let i = generalMapOffset[0]; i < (window.innerWidth / TILESIZE) + generalMapOffset[0]; i++) {
-			for (let j = generalMapOffset[1]; j < (window.innerHeight / TILESIZE) + generalMapOffset[1]; j++) {
+		for (let i = 0; i < (window.innerWidth / TILESIZE); i++) {
+			for (let j = 0; j < (window.innerHeight / TILESIZE); j++) {
 				if (preGenVegetation[i][j]) {
 					let tile = document.createElement("div")
-					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i][j].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
+					tile.setAttribute("style", "background-image: url(" + preGenVegetation[i+generalMapOffset[0]][j+generalMapOffset[1]].nameOfTile + ");height:32px;width:16px;position:absolute;left:" + (i * TILESIZE) + "px;top:" + (j * TILESIZE) + "px;")
 					gameArea.appendChild(tile)
 				}
 			}
@@ -170,7 +170,7 @@
 					preGenPlayer.coordinate[0] -= 1
 					if (preGenPlayer.coordinate[0] < (~~(window.innerWidth / TILESIZE / 4))) {
 						generalMapOffset[0] -= (~~(window.innerWidth / TILESIZE / 4))
-						preGenPlayer.coordinate[0] -= (~~(window.innerWidth / TILESIZE / 4))
+						preGenPlayer.coordinate[0] += (~~(window.innerWidth / TILESIZE / 4))
 						renderMap()
 						renderVegetation()
 					}
@@ -186,7 +186,7 @@
 					preGenPlayer.coordinate[0] += 1
 					if (preGenPlayer.coordinate[0] > (~~(3 * window.innerWidth / TILESIZE / 4))) {
 						generalMapOffset[0] += (~~(window.innerWidth / TILESIZE / 4))
-						preGenPlayer.coordinate[0] += (~~(window.innerWidth / TILESIZE / 4))
+						preGenPlayer.coordinate[0] -= (~~(window.innerWidth / TILESIZE / 4))
 						renderMap()
 						renderVegetation()
 					}
@@ -202,7 +202,7 @@
 					preGenPlayer.coordinate[1] -= 1
 					if (preGenPlayer.coordinate[1] < (~~(window.innerHeight / TILESIZE / 4))) {
 						generalMapOffset[1] -= (~~(window.innerHeight / TILESIZE / 4))
-						preGenPlayer.coordinate[1] -= (~~(window.innerHeight / TILESIZE / 4))
+						preGenPlayer.coordinate[1] += (~~(window.innerHeight / TILESIZE / 4))
 						renderMap()
 						renderVegetation()
 					}
@@ -218,7 +218,7 @@
 					preGenPlayer.coordinate[1] += 1
 					if (preGenPlayer.coordinate[1] > (~~(3 * window.innerHeight / TILESIZE / 4))) {
 						generalMapOffset[1] += (~~(window.innerHeight / TILESIZE / 4))
-						preGenPlayer.coordinate[1] += (~~(window.innerHeight / TILESIZE / 4))
+						preGenPlayer.coordinate[1] -= (~~(window.innerHeight / TILESIZE / 4))
 						renderMap()
 						renderVegetation()
 					}
@@ -262,7 +262,7 @@
 	let preGenVegetation = []
 	let playerIsInspecting = false
 	let playerIsMovingInDirection = [0, 0]
-	let generalMapOffset = [50, 50]
+	let generalMapOffset = [0, 0]
 	let vegetationKinds = {
 		"veg0.png": "Cactus",
 		"veg1.png": "Cactus",
