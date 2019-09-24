@@ -1,0 +1,91 @@
+.gameBG {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+}
+
+.gameBG#bg0 {
+    background-image: url("img/tiles/sand0.png");
+}
+
+.gameBG#bg1 {
+    background-image: url("img/tiles/sand1.png");
+}
+
+.gameBG#bg2 {
+    background-image: url("img/tiles/sand2.png");
+}
+
+.gameBG#bg3 {
+    background-image: url("img/tiles/sand3.png");
+}
+
+.gameBG#bg4 {
+    background-image: url("img/tiles/sand4.png");
+}
+
+.gameBG#bg5 {
+    background-image: url("img/tiles/sand5.png");
+}
+
+.gameBG#bg0:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+.gameBG#bg1:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+.gameBG#bg2:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+.gameBG#bg3:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+.gameBG#bg4:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+.gameBG#bg5:hover {
+    background-image: url("img/tiles/selected.png");
+}
+
+
+.vegetation {
+    height: 32px;
+    width: 16px;
+    position: absolute;
+}
+
+.vegetation#veg0 {
+    background-image: url("img/vegetation/veg0.png");
+}
+
+.vegetation#veg1 {
+    background-image: url("img/vegetation/veg1.png");
+}
+
+.vegetation#veg2 {
+    background-image: url("img/vegetation/veg2.png");
+}
+
+.vegetation#veg3 {
+    background-image: url("img/vegetation/veg3.png");
+}
+
+.vegetation#veg4 {
+    background-image: url("img/vegetation/veg4.png");
+}
+
+.vegetation#veg5 {
+    background-image: url("img/vegetation/veg5.png");
+}
+
+#player {
+    height: 32px;
+    width: 16px;
+    position: absolute;
+    background-image: url("img/player/default.png");
+}
